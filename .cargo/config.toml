@@ -1,0 +1,12 @@
+[build]
+target = "thumbv6m-none-eabi"
+
+[target.thumbv6m-none-eabi]
+linker = "rust-lld"
+rustflags = [
+    "-C", "target-cpu=cortex-m0plus",
+    "-C", "link-arg=-Tlink/firmware.ld",
+]
+
+[net]
+offline = true

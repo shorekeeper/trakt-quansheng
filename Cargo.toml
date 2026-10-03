@@ -1,0 +1,49 @@
+[package]
+name = "trakt"
+version = "0.1.0"
+edition = "2021"
+publish = false
+build = false
+autobins = false
+autoexamples = false
+autotests = false
+autobenches = false
+
+[[bin]]
+name = "trakt"
+path = "src/main.rs"
+test = false
+bench = false
+
+[dependencies]
+
+# Features select firmware code, not third-party packages.
+# Every named composition retains RF checks, watchdogs, fault capture, and stack guards.
+[features]
+default = ["diagnostics", "spectrum", "uart"]
+# Read-only Stack, Power, Last fault, and available UART screens.
+diagnostics = []
+# Extended debugger records, diagnostic screens, and controlled recovery tests.
+debug-tools = ["diagnostics"]
+# Shifted FM transmission from an explicitly enabled AM profile.
+fam = []
+spectrum = []
+uart = []
+
+[profile.dev]
+opt-level = "s"
+lto = true
+codegen-units = 1
+debug = 2
+debug-assertions = true
+overflow-checks = true
+panic = "abort"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+overflow-checks = true
+debug = 1
+strip = "none"
